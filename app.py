@@ -4,6 +4,10 @@ import sqlite3
 
 app = Flask(__name__)
 
+@app.route("/")
+def base():
+    return render_template("base.html")
+
 def get_message_db():
     if 'message_db' not in g:
         g.message_db = sqlite3.connect("messages_db.sqlite")
@@ -30,23 +34,24 @@ def insert_message(request):
 
     return(message, handle)
 
-def random_messages(n):
-    db = get_message_db()
-
-    cursor = db.cursor
-    cursor.execute(f'SELECT * FROM messages ORDER BY RANDOM() LIMIT {n}')
-    result = cursor.fetchall()
-    db.close()
-    
-    return result
-
-@app.route("/", methods = ["POST", "GET"])
+@app.route("/submit/", methods = ["POST", "GET"])
 def submit():
     if request.method == "GET":
         return render_template("submit.html")
     else:
         message, handle = insert_message(request)
         return render_template("submit.html", message=message, handle=handle)
+
+def random_messages(n):
+    db = get_message_db()
+
+    cursor = db.cursor()
+    cursor.execute(f'SELECT * FROM messages ORDER BY RANDOM() LIMIT {n}')
+    result = cursor.fetchall()
+
+    db.close()
+
+    return(result)
 
 @app.route("/view/")
 def view():

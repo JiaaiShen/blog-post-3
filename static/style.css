@@ -1,0 +1,11 @@
+html {
+    background: PowderBlue;
+    padding: 1rem;
+}
+
+h1 {
+    color: rgb(240, 156, 30);
+    font-family: papyrus, fantasy;
+    font-size: 30px;
+    margin: 1rem 0;
+}

@@ -7,9 +7,10 @@
 {% block content %}
 {% if messages %}
   {% for message in messages %}
-   {{message}}[1]
+   {{message[2]}}
    <br>
-   <i>- {{message}}[0]</i>
+   <i>- {{message[1]}}</i>
+   <br>
    <br>
   {% endfor %}
 {% endif %}
